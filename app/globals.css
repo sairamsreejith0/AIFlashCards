@@ -1,6 +1,42 @@
+/* src/styles/globals.css */
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+:root {
+  --color-primary: #0C0C0C;
+  --color-secondary: #F2613F;
+  --color-accent: #9B3922;
+}
+
+/* Example of usage */
+body {
+  color: var(--color-primary);
+  background-color: var(--color-primary);
+  margin:0;
+  padding:0;
+}
+
+.highlight {
+  color: var(--color-accent);
+}
+
+/* Customize scrollbar for WebKit browsers (Chrome, Safari) */
+.custom-scrollable::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+  height: 5px; /* Height of the scrollbar (for horizontal scrollbar) */
+}
+
+.custom-scrollable::-webkit-scrollbar-thumb {
+  background-color: #F2613F; /* Color of the scrollbar handle */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.custom-scrollable::-webkit-scrollbar-track {
+  background-color: 'black'; /* Background of the scrollbar track */
+}
+
+.custom-scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: #9B3922; /* Color of the scrollbar handle on hover */
+}
+
+.content{
+  margin-top: 75px;
 }

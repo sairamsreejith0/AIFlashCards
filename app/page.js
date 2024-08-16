@@ -3,6 +3,9 @@ import { Button } from "@mui/material";
 import getStripe from "./utils/page";
 
 
+import Header from './components/Header';
+import Page from './Dashboard/page'
+import '../app/globals.css'
 export default function Home() {
     const handleSubmit = async () => {
         const checkoutSession = await fetch('/api/checkout_sessions', {
