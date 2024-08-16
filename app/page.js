@@ -1,8 +1,6 @@
 'use client'
 import { Button } from "@mui/material";
 import getStripe from "./utils/page";
-
-
 import Header from './components/Header';
 import Page from './Dashboard/page'
 import '../app/globals.css'
@@ -24,8 +22,9 @@ export default function Home() {
         }
       }
   return (
- 
+    <>
+    <Page/>
     <Button  variant="contained"  color="primary"  sx={{mt: 2, mr: 2}} onClick={handleSubmit}>Pricing</Button>
-   
+   </>
   );
 }
