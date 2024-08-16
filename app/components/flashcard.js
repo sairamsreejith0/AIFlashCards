@@ -40,7 +40,7 @@ export default function Flashcard({ question, answer }) {
         >
           <CardContent>
             <Typography variant="h6" component="div">
-              Question:
+             
             </Typography>
             <Typography variant="body2" color="inherit">
               {question}
@@ -65,7 +65,7 @@ export default function Flashcard({ question, answer }) {
         >
           <CardContent>
             <Typography variant="h6" component="div">
-              Answer:
+              
             </Typography>
             <Typography variant="body2" color="inherit">
               {answer}
