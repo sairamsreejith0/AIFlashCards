@@ -1,19 +1,20 @@
-import {
-    ClerkProvider,
-    SignInButton,
-    SignedIn,
-    SignedOut,
-    UserButton
-  } from '@clerk/nextjs';
-export default function Page()
-{
+
+  import { Button } from '@mui/material';
+  import Flashcards from '../Playground/page';
+  import Link from 'next/link';
+  
+  export default function Page() {
     return (
-        <>
-        <SignedIn>
-            <UserButton />
-            <h1>dashboard</h1>
-          </SignedIn> 
-          </>
+    
         
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Link href="/Playground"><Button variant="outlined" sx={{color:'white'}}>+ CREATE</Button></Link>
+            </div>
+         
+          
+          
+        
+      
     );
-}
+  }
+  

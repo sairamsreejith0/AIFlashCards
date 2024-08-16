@@ -1,23 +1,14 @@
 import {
   ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
 } from '@clerk/nextjs';
-import Page from './sign-in/[[...sign-in]]/page'
-
+import Header from './components/Header';
+import '../app/globals.css'
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body>
-          {/* <SignedOut>
-            
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn> */}
+          <Header/>
           {children}
         </body>
       </html>
