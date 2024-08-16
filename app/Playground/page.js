@@ -45,19 +45,13 @@ export default function MessageInput() {
       // console.error('Error sending message:', error);// Logs any errors that occur during the HTTP request.
       console.error('Error generating questions and answers:', error);
     } finally {
-      setInput(''); // Clears the input field after the request is completed.
+      setMessage(''); // Clears the input field after the request is completed.
     }
   };
 
   return (
     <>
-      <List>
-            {qaPairs.map((pair, index) => (
-          <ListItem key={index}>
-            <ListItemText primary={`Q: ${pair.question}`} secondary={`A: ${pair.answer}`} />
-          </ListItem>
-        ))}
-      </List>
+    
       <Box
         sx={{
           display: 'flex',
@@ -113,7 +107,7 @@ export default function MessageInput() {
           Flashcards
         </Typography>
         <Grid container spacing={2}>
-          {sampleFlashcards.map((flashcard, index) => (
+          {qaPairs.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Flashcard
                 question={flashcard.question}
