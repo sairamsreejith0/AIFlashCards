@@ -36,20 +36,18 @@ export default function MessageInput() {
 
   return (
     <>
-
       <Box
-        component="form"
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 1,
-          marginTop: 2,
-          marginLeft: 2,
-          width: "50%",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center', // Center horizontally
+          justifyContent: 'center', // Center vertically if you want
+          gap: 2, // Add space between elements
+          margin: 'auto', // Center container horizontally
+          width: '50%', // Set width of container
+          maxWidth: '600px', // Optional: Set max width for responsiveness
+          marginTop: 4, // Add margin-top for spacing
         }}
-        noValidate
-        autoComplete="off"
       >
         <TextField
           fullWidth
@@ -60,7 +58,6 @@ export default function MessageInput() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           sx={{
-            flexGrow: 1,
             "& .MuiOutlinedInput-root": {
               color: "white", // Set text color to white
               "& fieldset": {
@@ -83,15 +80,14 @@ export default function MessageInput() {
           variant="contained"
           color="success"
           onClick={handleSend}
-          sx={{ height: "fit-content" }}
+          sx={{ height: "fit-content", marginTop: 2 }} // Add margin-top for spacing
         >
           Generate
         </Button>
       </Box>
+
       <Container>
-        <Typography variant="h4" component="h1" sx = {{
-            marginTop: 2
-        }} gutterBottom>
+        <Typography variant="h4" component="h1" sx={{ marginTop: 4 }} gutterBottom>
           Flashcards
         </Typography>
         <Grid container spacing={2}>

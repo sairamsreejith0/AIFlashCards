@@ -7,7 +7,7 @@
     return (
     
         
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <div style={{ textAlign: 'center' }}>
             <Link href="/Playground"><Button variant="outlined" sx={{color:'white'}}>+ CREATE</Button></Link>
             </div>
          

@@ -3,13 +3,20 @@ import {
 } from '@clerk/nextjs';
 import Header from './components/Header';
 import '../app/globals.css'
+import { neobrutalism } from '@clerk/themes';
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{
+      baseTheme:[neobrutalism],
+    }}>
+       
       <html lang="en">
-        <body>
+        <body className="custom-scrollable">
+       
           <Header/>
-          {children}
+          <div className="content">{children}</div>
+          
+         
         </body>
       </html>
     </ClerkProvider>
