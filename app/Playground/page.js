@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { TextField, Button, Box } from "@mui/material";
+import axios from 'axios'; // AXIOS -  a library for making http requests
+import { TextField, Button, Box, List, ListItem, ListItemText } from "@mui/material";
 import { Container, Grid, Typography } from "@mui/material";
 import Flashcard from "../components/flashcard";
 import "../../app/globals.css";
@@ -27,15 +28,30 @@ const sampleFlashcards = [
 
 export default function MessageInput() {
   const [message, setMessage] = useState("");
+  const [qaPairs, setQaPairs] = useState([]); // Stores an array of question-answer pairs
 
-  const handleSend = () => {
-    // Handle the send action here, e.g., send the message to an API or log it
-    console.log("Message sent:", message);
-    setMessage(""); // Clear the text area after sending
+  const handleSend = async () => {
+    if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
+
+    try {
+      const response = await axios.post('/api/chat', { message: message });
+      // Sends a POST request to the '/api/chat' endpoint with the user's message.
+
+      // setMessages([...messages, { text: input, user: 'me' }, { text: response.data.reply, user: 'ai' }]);
+      // Updates the messages state with the user's input and the AI's reply.
+      setQaPairs(response.data.qaPairs); // Update state with the array of Q&A pairs
+
+    } catch (error) {
+      // console.error('Error sending message:', error);// Logs any errors that occur during the HTTP request.
+      console.error('Error generating questions and answers:', error);
+    } finally {
+      setMessage(''); // Clears the input field after the request is completed.
+    }
   };
 
   return (
     <>
+    
       <Box
         sx={{
           display: 'flex',
@@ -91,7 +107,7 @@ export default function MessageInput() {
           Flashcards
         </Typography>
         <Grid container spacing={2}>
-          {sampleFlashcards.map((flashcard, index) => (
+          {qaPairs.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Flashcard
                 question={flashcard.question}
