@@ -25,7 +25,7 @@ body {
 }
 
 .custom-scrollable::-webkit-scrollbar-thumb {
-  background-color: #F2613F; /* Color of the scrollbar handle */
+  background-color: white; /* Color of the scrollbar handle */
   border-radius: 5px; /* Rounded corners */
 }
 
@@ -39,4 +39,8 @@ body {
 
 .content{
   margin-top: 75px;
+}
+
+.clerk-user-button .clerk-user-button-name {
+  font-size: 24px !important; /* Adjust this value as needed */
 }
