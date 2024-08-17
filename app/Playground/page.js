@@ -13,18 +13,18 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 
-const sampleFlashcards = [
-  {
-    question: "What is React?",
-    answer: "A JavaScript library for building user interfaces.",
-  },
-  {
-    question: "What is Next.js?",
-    answer: "A React framework for building web applications.",
-  },
-  { question: "What is Material-UI?", answer: "A popular React UI framework." },
-  { question: "What is Material-UI?", answer: "A popular React UI framework." },
-];
+// const sampleFlashcards = [
+//   {
+//     question: "What is React?",
+//     answer: "A JavaScript library for building user interfaces.",
+//   },
+//   {
+//     question: "What is Next.js?",
+//     answer: "A React framework for building web applications.",
+//   },
+//   { question: "What is Material-UI?", answer: "A popular React UI framework." },
+//   { question: "What is Material-UI?", answer: "A popular React UI framework." },
+// ];
 
 export default function MessageInput() {
   const [message, setMessage] = useState("");
