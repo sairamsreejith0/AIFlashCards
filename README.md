@@ -19,6 +19,8 @@
   - npm install axios
   - npm install @clerk/themes
   - npm install @clerk/nextjs
+  - npm install @stripe/stripe-js
+
 - Set up the .env.local file:
   - OPENAI_API_KEY= your_api_key 
   - NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key

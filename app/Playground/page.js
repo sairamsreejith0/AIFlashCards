@@ -1,3 +1,4 @@
+// Playground/page.js
 "use client";
 import React, { useState } from "react";
 import axios from 'axios'; // AXIOS -  a library for making http requests
@@ -29,9 +30,12 @@ import {
 export default function MessageInput() {
   const [message, setMessage] = useState("");
   const [qaPairs, setQaPairs] = useState([]); // Stores an array of question-answer pairs
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleSend = async () => {
     if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
+
+    setLoading(true); // Start loading
 
     try {
       const response = await axios.post('/api/chat', { message: message });
@@ -45,6 +49,7 @@ export default function MessageInput() {
       // console.error('Error sending message:', error);// Logs any errors that occur during the HTTP request.
       console.error('Error generating questions and answers:', error);
     } finally {
+      setLoading(false); // Stop loading
       setMessage(''); // Clears the input field after the request is completed.
     }
   };
@@ -96,27 +101,79 @@ export default function MessageInput() {
           variant="contained"
           color="success"
           onClick={handleSend}
-          sx={{ height: "fit-content", marginTop: 2 }} // Add margin-top for spacing
+          sx={{ height: "fit-content", marginTop: 2, backgroundColor: '#535C91', '&:hover': {
+      backgroundColor: '#2E236C'} }} // Add margin-top for spacing
         >
           Generate
         </Button>
       </Box>
+      {loading && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dim the screen
+            zIndex: 1000, // Ensure it appears above other content
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h6" component="div" color="white" gutterBottom>
+            Generating questions...
+          </Typography>
+          <Box
+            sx={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%', // Makes the box circular
+              overflow: 'hidden', // Ensures the image fits within the circle
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              border: '4px solid white', // Optional: Adds a white border around the circle
+            }}
+          >
+            <img
+              src="/genielamp.png"
+              alt="Loading..."
+              style={{
+                width: '100%', // Adjusts the image size to fit within the circle
+                height: 'auto', // Maintains the aspect ratio
+                animation: 'spin 2s linear infinite',
+              }}
+            />
+          </Box>
+          <style jsx>{`
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+          `}</style>
+        </Box>
+      )}
 
-      <Container>
-        <Typography variant="h4" component="h1" sx={{ marginTop: 4 }} gutterBottom>
-          Flashcards
-        </Typography>
-        <Grid container spacing={2}>
-          {qaPairs.map((flashcard, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Flashcard
-                question={flashcard.question}
-                answer={flashcard.answer}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      {!loading && (
+        <Container>
+          <Typography variant="h4" component="h1" sx={{ marginTop: 4 }} gutterBottom>
+            Flashcards
+          </Typography>
+          <Grid container spacing={2}>
+            {qaPairs.map((flashcard, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Flashcard
+                  question={flashcard.question}
+                  answer={flashcard.answer}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      )}
     </>
   );
 }
