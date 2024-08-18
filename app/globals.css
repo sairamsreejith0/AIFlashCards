@@ -53,3 +53,29 @@ body {
 .clerk-user-button .clerk-user-button-name {
   font-size: 24px !important; /* Adjust this value as needed */
 }
+
+/* styles.css */
+
+.gradient-button {
+  background: linear-gradient(135deg, #070F2B 0%, #1B1A55 33%, #535C91 66%, #9290C3 100%);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+
+.gradient-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #9290C3 0%, #535C91 33%, #1B1A55 66%, #070F2B 100%);
+}
+
+.gradient-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
   >
       <html lang="en">
         <body className="custom-scrollable">
-        <div class ="layout"> 
+        <div className ="layout"> 
           <Header/>
           <div className="content">{children}</div>
           <Footer/>

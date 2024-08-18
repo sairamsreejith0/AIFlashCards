@@ -4,6 +4,7 @@ import { Box, Button } from '@mui/material';
 import Flashcards from '../Playground/page';
 import Link from 'next/link';
 import getStripe from '../utils/page';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 
 
 
@@ -31,6 +32,8 @@ export const handleSubmit = async () => { // Exporting handleSubmit function
 
 export default function Page() {
   return (
+    <>
+   
     <div style={{ textAlign: 'center' }}>
       <Link href="/Playground">
         <Button variant="outlined" sx={{ color: 'white' }}>+ CREATE</Button>
@@ -39,5 +42,8 @@ export default function Page() {
         Pricing
       </Button> */}
     </div>
+   
+   
+    </>
   );
 }

@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import Link from 'next/link';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { RedirectToSignIn, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { dark,neobrutalism } from '@clerk/themes';
-
+import '../../app/globals.css';
 export default function Header() {
   return (
     <AppBar position="fixed" sx={{ bgcolor: '#1B1A55', color: 'white'}}>
@@ -30,19 +30,25 @@ export default function Header() {
 
         {/* Buttons on the right */}
         <SignedOut>
+          
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Link href="/sign-in" passHref>
-              <Button sx={{ color: 'white' }}>Login</Button>
+              <Button className='gradient-button'sx={{ color: 'white' }}>Login</Button>
             </Link>
             <Link href="/sign-up" passHref>
-              <Button sx={{ color: 'white' }}>Sign Up</Button>
+              <Button  className='gradient-button' sx={{ color: 'white' }}>Sign Up</Button>
             </Link>
           </Box>
+        
         </SignedOut>
         <SignedIn>
+        <Link href="/Dashboard/myCollection" passHref>
+              <Button  className='gradient-button' sx={{ color: 'white' }}>My Collection</Button>
+            </Link>
         
           <UserButton 
           showName
+          signOutUrl="/"
           />
         </SignedIn>
       </Toolbar>
