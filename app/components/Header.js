@@ -9,15 +9,22 @@ import { Box } from '@mui/material';
 import Link from 'next/link';
 import { RedirectToSignIn, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { dark,neobrutalism } from '@clerk/themes';
-
+import '../../app/globals.css';
 export default function Header() {
   return (
-    <AppBar position="fixed" sx={{ bgcolor: 'var(--color-accent)', color: 'white'}}>
+    <AppBar position="fixed" sx={{ bgcolor: '#1B1A55', color: 'white'}}>
       <Toolbar>
         {/* Logo on the left */}
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           <Link href="/" passHref>
-            <Button sx={{ color: 'white' }}>Logo</Button>
+            <Button sx={{ color: 'white', fontFamily: 'Poppins'}}>
+            <Box
+              component="img"
+              src="/logo.jpg" // Update with your logo's path
+              alt="QGenie Logo"
+              sx={{ width: 45, height: 45, mr: 1 }} // Adjust size and spacing
+            />
+              QGenie</Button>
           </Link>
         </Typography>
 
@@ -26,21 +33,22 @@ export default function Header() {
           
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Link href="/sign-in" passHref>
-              <Button sx={{ color: 'white' }}>Login</Button>
+              <Button className='gradient-button'sx={{ color: 'white' }}>Login</Button>
             </Link>
             <Link href="/sign-up" passHref>
-              <Button sx={{ color: 'white' }}>Sign Up</Button>
+              <Button  className='gradient-button' sx={{ color: 'white' }}>Sign Up</Button>
             </Link>
           </Box>
-          <RedirectToSignIn/>
+        
         </SignedOut>
         <SignedIn>
         <Link href="/Dashboard/myCollection" passHref>
-              <Button sx={{ color: 'white' }}>My Collection</Button>
+              <Button  className='gradient-button' sx={{ color: 'white' }}>My Collection</Button>
             </Link>
-          <UserButton
-            
-           
+        
+          <UserButton 
+          showName
+          signOutUrl="/"
           />
         </SignedIn>
       </Toolbar>

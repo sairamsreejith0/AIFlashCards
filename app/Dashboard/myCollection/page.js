@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Container, Grid, Typography, Button } from '@mui/material';
 import CompactFlashcard from '../../components/CompactCard';
 import { db } from '../../../config'; // Import your Firestore config
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { useAuth } from '@clerk/nextjs';
 import Flashcard from '@/app/components/flashcard';
-
+import '../../../app/globals.css'
 const FlashcardCollection = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState(null); // State to hold selected collection
@@ -64,15 +64,25 @@ const FlashcardCollection = () => {
       
       {selectedCollection ? (
         <div>
-          <Button onClick={handleBackClick}>Back to Collections</Button>
-            {selectedCollection.cards.map((card, index) => (
-          <Flashcard question={card.question} answer={card.answer}/>
-            ))};
-        </div>
+        <Button
+          onClick={handleBackClick}
+          className='gradient-button'
+        >
+          Back to Collections
+        </Button>
+        <Grid container spacing={3} justifyContent="center">
+          {selectedCollection.cards.map((card, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Flashcard question={card.question} answer={card.answer} />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+      
       ) : (
-        <Grid container spacing={1} justifyContent="center">
+        <Grid container spacing={3} justifyContent="center">
           {flashcards.length > 0 ? flashcards.map((flashcard, index) => (
-            <Grid item xs={12} sm={6} md={2} key={index}>
+            <Grid item xs={12} sm={6} md={3} key={index}>
               <CompactFlashcard
                 title={flashcard.title}
                 onClick={() => handleCollectionClick(flashcard)} // Pass the click handler
