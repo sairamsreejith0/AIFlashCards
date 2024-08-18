@@ -12,7 +12,7 @@ import { dark,neobrutalism } from '@clerk/themes';
 
 export default function Header() {
   return (
-    <AppBar position="fixed" sx={{ bgcolor: '#1B1A55', color: 'white'}}>
+    <AppBar position="static" sx={{ bgcolor: '#1B1A55', color: 'white'}}>
       <Toolbar>
         {/* Logo on the left */}
         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
