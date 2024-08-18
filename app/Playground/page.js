@@ -21,7 +21,10 @@ export default function MessageInput() {
 
   const { isLoaded, userId, sessionId, getToken } = useAuth();
 
- 
+  // const temparray = [{
+  //   question:"xyz",
+  //   answer:"xyz",
+  // }];
   const handleSend = async () => {
     if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
 

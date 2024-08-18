@@ -1,10 +1,9 @@
-import {
-  ClerkProvider,
-} from '@clerk/nextjs';
+import React from 'react';
+import { ClerkProvider } from '@clerk/nextjs';
 import Header from './components/Header';
 import Footer from './components/footer';
-import '../app/globals.css'
-import { dark, shadesOfPurple } from '@clerk/themes';
+import '../app/globals.css';
+import { dark, neobrutalism, shadesOfPurple } from '@clerk/themes';
 
 export default function RootLayout({ children }) {
   return (
