@@ -3,6 +3,7 @@
 import { Paper, Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 import getStripe from '../utils/page';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 
 export const handleSubmit = async () => {
   try {
@@ -47,11 +48,20 @@ export default function Page() {
       <Typography variant="body1" gutterBottom fontFamily={"Roboto"}>
         Turn any text into exam-ready flashcards instantly. Prepare smarter, not harder—your study genie awaits!
       </Typography>
+      <SignedIn>
       <Link href="/Playground" passHref>
         <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
           + CREATE
         </Button>
       </Link>
+      </SignedIn>
+      <SignedOut>
+      <Link href="/sign-in" passHref>
+        <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
+          + CREATE
+        </Button>
+      </Link>
+      </SignedOut>
     </Paper>
   );
 }
