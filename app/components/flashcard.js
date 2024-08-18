@@ -1,4 +1,4 @@
-
+// components/flashcard.js
 import { Card, CardContent, Typography, Box } from '@mui/material';
 
 export default function Flashcard({ question, answer }) {
@@ -34,7 +34,7 @@ export default function Flashcard({ question, answer }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor:'#F2613F',
+            bgcolor:'#2E236C',
             color:'white'
           }}
         >
@@ -59,7 +59,7 @@ export default function Flashcard({ question, answer }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor:'green',
+            bgcolor:'#535C91',
             color:'white'
           }}
         >

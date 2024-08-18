@@ -1,3 +1,4 @@
+// utils/page.js
 import { loadStripe } from '@stripe/stripe-js'
 
 

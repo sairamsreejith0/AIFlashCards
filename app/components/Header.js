@@ -12,12 +12,19 @@ import { dark,neobrutalism } from '@clerk/themes';
 
 export default function Header() {
   return (
-    <AppBar position="fixed" sx={{ bgcolor: '#4682B4', color: 'white'}}>
+    <AppBar position="fixed" sx={{ bgcolor: '#1B1A55', color: 'white'}}>
       <Toolbar>
         {/* Logo on the left */}
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
           <Link href="/" passHref>
-            <Button sx={{ color: 'white' }}>Logo</Button>
+            <Button sx={{ color: 'white', fontFamily: 'Poppins'}}>
+            <Box
+              component="img"
+              src="/logo.jpg" // Update with your logo's path
+              alt="QGenie Logo"
+              sx={{ width: 45, height: 45, mr: 1 }} // Adjust size and spacing
+            />
+              QGenie</Button>
           </Link>
         </Typography>
 
