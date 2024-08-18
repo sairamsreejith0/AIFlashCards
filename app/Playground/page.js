@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import axios from 'axios'; // AXIOS -  a library for making http requests
 import { TextField, Button, Box, List, ListItem, ListItemText } from "@mui/material";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography,Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions} from "@mui/material";
 import Flashcard from "../components/flashcard";
+import { db } from "../firebase/config";
+import { useRouter } from "next/navigation";
+import {doc,collection,setDoc,getDoc,writeBatch} from 'firebase/firestore'
 import "../../app/globals.css";
 import {
   ClerkProvider,
@@ -11,6 +14,7 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
 
 const sampleFlashcards = [
@@ -27,8 +31,13 @@ const sampleFlashcards = [
 ];
 
 export default function MessageInput() {
+  const {isLoaded,isSignedIn,user}=useUser()
   const [message, setMessage] = useState("");
   const [qaPairs, setQaPairs] = useState([]); // Stores an array of question-answer pairs
+  const [setName, setSetName] = useState('')
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const router = useRouter();
+
 
   const handleSend = async () => {
     if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
@@ -48,6 +57,49 @@ export default function MessageInput() {
       setMessage(''); // Clears the input field after the request is completed.
     }
   };
+
+  const handleOpenDialog = () => setDialogOpen(true)
+const handleCloseDialog = () => setDialogOpen(false)
+const saveFlashcards = async () => {
+  if (!setName.trim()) {
+    alert('Please enter a name for your flashcard set.')
+    return
+  }
+
+  try {
+    const userDocRef = doc(collection(db, 'users'), user.id)
+    const userDocSnap = await getDoc(userDocRef)
+
+    const batch = writeBatch(db)
+
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data()
+      const updatedSets = [...(userData.flashcardSets || []), { name: setName }]
+      batch.update(userDocRef, { flashcardSets: updatedSets })
+    } else {
+      batch.set(userDocRef, { flashcardSets: [{ name: setName }] })
+    }
+
+    const setDocRef = doc(collection(userDocRef, 'flashcardSets'), setName)
+    batch.set(setDocRef, { sampleFlashcards })
+
+    await batch.commit()
+    
+    alert('Flashcards saved successfully!')
+    handleCloseDialog()
+    setSetName('')
+    router.push('/flashcardsoverview');  
+     
+  } catch (error) {
+    console.error('Error saving flashcards:', error)
+    alert('An error occurred while saving flashcards. Please try again.')
+  }
+}
+
+
+
+
+  
 
   return (
     <>
@@ -107,7 +159,7 @@ export default function MessageInput() {
           Flashcards
         </Typography>
         <Grid container spacing={2}>
-          {qaPairs.map((flashcard, index) => (
+          {sampleFlashcards.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Flashcard
                 question={flashcard.question}
@@ -116,6 +168,37 @@ export default function MessageInput() {
             </Grid>
           ))}
         </Grid>
+        {sampleFlashcards.length > 0 && (
+  <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+    <Button variant="contained" color="primary" onClick={handleOpenDialog}>
+      Save Flashcards
+    </Button>
+  </Box>
+)}
+
+<Dialog open={dialogOpen} onClose={handleCloseDialog}>
+  <DialogTitle>Save Flashcard Set</DialogTitle>
+  <DialogContent>
+    <DialogContentText>
+      Please enter a name for your flashcard set.
+    </DialogContentText>
+    <TextField
+      autoFocus
+      margin="dense"
+      label="Set Name"
+      type="text"
+      fullWidth
+      value={setName}
+      onChange={(e) => setSetName(e.target.value)}
+    />
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleCloseDialog}>Cancel</Button>
+    <Button onClick={saveFlashcards} color="primary">
+      Save
+    </Button>
+  </DialogActions>
+</Dialog>
       </Container>
     </>
   );

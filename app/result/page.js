@@ -60,10 +60,10 @@ import { Box,Container,CircularProgress,Typography } from "@mui/material"
       <Container maxWidth="sm" sx={{textAlign: 'center', mt: 4}}>
         {session.payment_status === 'paid' ? (
           <>
-            <Typography variant="h4">Thank you for your purchase!</Typography>
+            <Typography variant="h4" color="white">Thank you for your purchase!</Typography>
             <Box sx={{mt: 2}}>
-              <Typography variant="h6">Session ID: {session_id}</Typography>
-              <Typography variant="body1">
+              <Typography variant="h6" color="white">Session ID: {session_id}</Typography>
+              <Typography variant="body1" color="white">
                 We have received your payment. You will receive an email with the
                 order details shortly.
               </Typography>
@@ -71,9 +71,9 @@ import { Box,Container,CircularProgress,Typography } from "@mui/material"
           </>
         ) : (
           <>
-            <Typography variant="h4">Payment failed</Typography>
+            <Typography variant="h4" color="white">Payment failed</Typography>
             <Box sx={{mt: 2}}>
-              <Typography variant="body1">
+              <Typography variant="body1" color="white">
                 Your payment was not successful. Please try again.
               </Typography>
             </Box>
