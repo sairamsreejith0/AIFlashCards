@@ -21,10 +21,10 @@ export default function MessageInput() {
 
   const { isLoaded, userId, sessionId, getToken } = useAuth();
 
-  const temparray = [{
-    question:"xyz",
-    answer:"xyz",
-  }];
+  // const temparray = [{
+  //   question:"xyz",
+  //   answer:"xyz",
+  // }];
   const handleSend = async () => {
     if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
 
@@ -133,7 +133,7 @@ export default function MessageInput() {
             Flashcards
           </Typography>
           <Grid container spacing={2}>
-            {temparray.map((flashcard, index) => (
+            {qaPairs.map((flashcard, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Flashcard
                   question={flashcard.question}
@@ -142,7 +142,7 @@ export default function MessageInput() {
               </Grid>
             ))}
           </Grid>
-          {temparray.length > 0 && (
+          {qaPairs.length > 0 && (
           <Box
             sx={{
               display: 'flex',
