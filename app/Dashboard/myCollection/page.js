@@ -122,7 +122,7 @@ const FlashcardCollection = () => {
       {selectedCollection ? (
         <div>
           <Box sx={{ display: "flex", marginLeft: 2, gap: 2 }}>
-            <Button onClick={handleBackClick} className="gradient-button">
+            <Button onClick={handleBackClick}  className="gradient-button">
               Back to Collections
             </Button>
             <Button
