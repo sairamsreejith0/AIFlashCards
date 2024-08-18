@@ -1,16 +1,19 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Typography, Button } from '@mui/material';
+import { Container, Grid, Typography, Button, Box } from '@mui/material';
 import CompactFlashcard from '../../components/CompactCard';
 import { db } from '../../../config'; // Import your Firestore config
 import { collection, getDocs } from 'firebase/firestore';
 import { useAuth } from '@clerk/nextjs';
 import Flashcard from '@/app/components/flashcard';
 import '../../../app/globals.css'
+import SearchBar from '../../components/Search';
+
 const FlashcardCollection = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState(null); // State to hold selected collection
   const [loading, setLoading] = useState(true);
+  const [searchItem,setSearchItem] = useState("");
   const { userId } = useAuth(); // Get the logged-in user's ID from Clerk
 
   useEffect(() => {
@@ -44,6 +47,10 @@ const FlashcardCollection = () => {
     fetchFlashcards();
   }, [userId]);
 
+  const handleChange = (event) =>{
+    setSearchItem(event.target.value);
+  }
+
   const handleCollectionClick = (collection) => {
     setSelectedCollection(collection); // Set the selected collection
   };
@@ -51,6 +58,8 @@ const FlashcardCollection = () => {
   const handleBackClick = () => {
     setSelectedCollection(null); // Go back to the collection view
   };
+  const filteredItems = flashcards.filter((item)=>
+         item.title.toLowerCase().includes(searchItem.toLowerCase()))             
 
   if (loading) {
     return <Typography variant="h6" align="center">Loading flashcards...</Typography>;
@@ -58,30 +67,34 @@ const FlashcardCollection = () => {
 
   return (
     <Container>
-      <Typography variant="h4" component="h1" sx={{ marginTop: 4, textAlign: 'center' }} gutterBottom>
+      <Typography variant="h4" component="h1" sx={{ marginTop: 4, textAlign: 'center', color: "white" }} gutterBottom>
         {selectedCollection ? selectedCollection.title : "Flashcard Collection"}
       </Typography>
       
+      {/* Centered Search Bar */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}>
+        <SearchBar onHandleChange={handleChange} />
+      </Box>
+
       {selectedCollection ? (
         <div>
-        <Button
-          onClick={handleBackClick}
-          className='gradient-button'
-        >
-          Back to Collections
-        </Button>
-        <Grid container spacing={3} justifyContent="center">
-          {selectedCollection.cards.map((card, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <Flashcard question={card.question} answer={card.answer} />
-            </Grid>
-          ))}
-        </Grid>
-      </div>
-      
+          <Button
+            onClick={handleBackClick}
+            className='gradient-button'
+          >
+            Back to Collections
+          </Button>
+          <Grid container spacing={3} justifyContent="center">
+            {selectedCollection.cards.map((card, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Flashcard question={card.question} answer={card.answer} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       ) : (
         <Grid container spacing={3} justifyContent="center">
-          {flashcards.length > 0 ? flashcards.map((flashcard, index) => (
+          {filteredItems.length > 0 ? filteredItems.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <CompactFlashcard
                 title={flashcard.title}

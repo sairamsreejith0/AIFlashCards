@@ -1,9 +1,6 @@
-// components/flashcard.js
 import { Card, CardContent, Typography, Box } from '@mui/material';
 
 export default function Flashcard({ question, answer }) {
- 
-
   return (
     <Box
       sx={{
@@ -34,13 +31,23 @@ export default function Flashcard({ question, answer }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor:'#2E236C',
-            color:'white'
+            bgcolor: '#2E236C',
+            color: 'white',
           }}
         >
-          <CardContent>
+          <CardContent
+            sx={{
+              overflowY: 'scroll', // Enable vertical scrolling
+              maxHeight: '100%', // Ensure it does not exceed card height
+              '&::-webkit-scrollbar': {
+                display: 'none', // Hide scrollbar for WebKit browsers
+              },
+              '-ms-overflow-style': 'none',  // Hide scrollbar for IE and Edge
+              'scrollbar-width': 'none',  // Hide scrollbar for Firefox
+            }}
+          >
             <Typography variant="h6" component="div">
-             
+              {/* Add a title or leave it empty */}
             </Typography>
             <Typography variant="body2" color="inherit">
               {question}
@@ -59,13 +66,23 @@ export default function Flashcard({ question, answer }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor:'#535C91',
-            color:'white'
+            bgcolor: '#535C91',
+            color: 'white',
           }}
         >
-          <CardContent>
+          <CardContent
+            sx={{
+              overflowY: 'scroll', // Enable vertical scrolling
+              maxHeight: '100%', // Ensure it does not exceed card height
+              '&::-webkit-scrollbar': {
+                display: 'none', // Hide scrollbar for WebKit browsers
+              },
+              '-ms-overflow-style': 'none',  // Hide scrollbar for IE and Edge
+              'scrollbar-width': 'none',  // Hide scrollbar for Firefox
+            }}
+          >
             <Typography variant="h6" component="div">
-              
+              {/* Add a title or leave it empty */}
             </Typography>
             <Typography variant="body2" color="inherit">
               {answer}
