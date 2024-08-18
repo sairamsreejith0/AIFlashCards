@@ -15,8 +15,6 @@ export default function RootLayout({ children }) {
        
           <Header/>
           <div className="content">{children}</div>
-          
-         
         </body>
       </html>
     </ClerkProvider>

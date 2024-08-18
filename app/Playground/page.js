@@ -1,68 +1,75 @@
 "use client";
 import React, { useState } from "react";
-import axios from 'axios'; // AXIOS -  a library for making http requests
-import { TextField, Button, Box, List, ListItem, ListItemText } from "@mui/material";
-import { Container, Grid, Typography } from "@mui/material";
+import axios from 'axios'; // AXIOS - a library for making http requests
+import { TextField, Button, Box, Container, Grid, Typography } from "@mui/material";
 import Flashcard from "../components/flashcard";
 import "../../app/globals.css";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
-
-const sampleFlashcards = [
-  {
-    question: "What is React?",
-    answer: "A JavaScript library for building user interfaces.",
-  },
-  {
-    question: "What is Next.js?",
-    answer: "A React framework for building web applications.",
-  },
-  { question: "What is Material-UI?", answer: "A popular React UI framework." },
-  { question: "What is Material-UI?", answer: "A popular React UI framework." },
-];
+import { saveFlashcards } from '../utils/api'; // Ensure correct path
+import { useAuth } from '@clerk/nextjs';
+import { signInWithCustomToken } from "firebase/auth"; // Firebase auth methods
+import { auth } from '../../config'; // Import your initialized Firebase services
 
 export default function MessageInput() {
   const [message, setMessage] = useState("");
   const [qaPairs, setQaPairs] = useState([]); // Stores an array of question-answer pairs
+  const [title, setTitle] = useState("");
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
 
+  const temparray = [{
+    question:"xyz",
+    answer:"xyz",
+  }];
+  
   const handleSend = async () => {
     if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
 
     try {
+      setTitle(message);
       const response = await axios.post('/api/chat', { message: message });
-      // Sends a POST request to the '/api/chat' endpoint with the user's message.
-
-      // setMessages([...messages, { text: input, user: 'me' }, { text: response.data.reply, user: 'ai' }]);
-      // Updates the messages state with the user's input and the AI's reply.
       setQaPairs(response.data.qaPairs); // Update state with the array of Q&A pairs
 
     } catch (error) {
-      // console.error('Error sending message:', error);// Logs any errors that occur during the HTTP request.
       console.error('Error generating questions and answers:', error);
     } finally {
       setMessage(''); // Clears the input field after the request is completed.
     }
   };
 
+  const handleSave = async () => {
+    try {
+      if (!userId) {
+        throw new Error("User is not authenticated");
+      }
+
+      // Fetch Firebase token using Clerk
+      const firebaseToken = await getToken({ template: 'integration_firebase' });
+      console.log("Firebase Token Retrieved:", firebaseToken);
+
+      // Sign in with Firebase using the token
+      await signInWithCustomToken(auth, firebaseToken);
+      console.log("Signed in with Firebase");
+
+      // Now proceed to save the flashcards
+      await saveFlashcards(userId, qaPairs, title);
+      console.log('Flashcards saved successfully');
+    } catch (error) {
+      console.error('Error saving flashcards:', error);
+    }
+  };
+
   return (
     <>
-    
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center', // Center horizontally
-          justifyContent: 'center', // Center vertically if you want
-          gap: 2, // Add space between elements
-          margin: 'auto', // Center container horizontally
-          width: '50%', // Set width of container
-          maxWidth: '600px', // Optional: Set max width for responsiveness
-          marginTop: 4, // Add margin-top for spacing
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 2,
+          margin: 'auto',
+          width: '50%',
+          maxWidth: '600px',
+          marginTop: 4,
         }}
       >
         <TextField
@@ -75,19 +82,19 @@ export default function MessageInput() {
           onChange={(e) => setMessage(e.target.value)}
           sx={{
             "& .MuiOutlinedInput-root": {
-              color: "white", // Set text color to white
+              color: "white",
               "& fieldset": {
-                borderColor: "white", // Set border color here
+                borderColor: "white",
               },
               "&:hover fieldset": {
-                borderColor: "white", // Set border color on hover
+                borderColor: "white",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "white", // Set border color when focused
+                borderColor: "white",
               },
             },
             "& .MuiInputBase-input": {
-              color: "white", // Ensures text input is white
+              color: "white",
             },
           }}
         />
@@ -96,7 +103,7 @@ export default function MessageInput() {
           variant="contained"
           color="success"
           onClick={handleSend}
-          sx={{ height: "fit-content", marginTop: 2 }} // Add margin-top for spacing
+          sx={{ height: "fit-content", marginTop: 2 }}
         >
           Generate
         </Button>
@@ -116,6 +123,24 @@ export default function MessageInput() {
             </Grid>
           ))}
         </Grid>
+        {qaPairs.length > 0 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: 2,
+            }}
+          >
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ height: "fit-content" }}
+              onClick={handleSave}
+            >
+              Save
+            </Button>
+          </Box>
+        )}
       </Container>
     </>
   );

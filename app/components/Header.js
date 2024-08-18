@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import Link from 'next/link';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { RedirectToSignIn, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { dark,neobrutalism } from '@clerk/themes';
 
 export default function Header() {
@@ -23,6 +23,7 @@ export default function Header() {
 
         {/* Buttons on the right */}
         <SignedOut>
+          
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Link href="/sign-in" passHref>
               <Button sx={{ color: 'white' }}>Login</Button>
@@ -31,10 +32,14 @@ export default function Header() {
               <Button sx={{ color: 'white' }}>Sign Up</Button>
             </Link>
           </Box>
+          <RedirectToSignIn/>
         </SignedOut>
         <SignedIn>
+        <Link href="/Dashboard/myCollection" passHref>
+              <Button sx={{ color: 'white' }}>My Collection</Button>
+            </Link>
           <UserButton
-            showName
+            
            
           />
         </SignedIn>
