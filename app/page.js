@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 // import Header from './components/Header';
 import Page from './Dashboard/page'
 import '../app/globals.css'
+import { SignedIn,SignedOut } from "@clerk/nextjs";
 export default function Home() {
     // const handleSubmit = async () => {
     //     const checkoutSession = await fetch('/api/checkout_sessions', {
@@ -23,8 +24,13 @@ export default function Home() {
     //   }
   return (
     <>
+    <SignedIn>
     <Page/>
+    </SignedIn>
     {/* <Button  variant="contained"  color="primary"  sx={{mt: 2, mr: 2}} onClick={handleSubmit}>Pricing</Button> */}
+    <SignedOut>
+      <h1>home page</h1>
+    </SignedOut>
    </>
   );
 }

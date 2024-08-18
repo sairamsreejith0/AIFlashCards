@@ -31,13 +31,11 @@ export default function RootLayout({ children }) {
     >
       <html lang="en">
         <body className="custom-scrollable">
-          <div className="layout">
-            <Header />
-            <div className="content" style={{ paddingTop: '64px' }}>
-              {children}
-            </div>
-            <Footer />
-          </div>
+        <div className ="layout"> 
+          <Header/>
+          <div className="content">{children}</div>
+          <Footer/>
+        </div>
         </body>
       </html>
     </ClerkProvider>

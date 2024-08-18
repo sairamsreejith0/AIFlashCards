@@ -1,43 +1,57 @@
 "use client"; // This ensures the component is treated as a client component
 
-import { Box, Button } from '@mui/material';
-import Flashcards from '../Playground/page';
+import { Paper, Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 import getStripe from '../utils/page';
 
-
-
-export const handleSubmit = async () => { // Exporting handleSubmit function
+export const handleSubmit = async () => {
   try {
-      const checkoutSession = await fetch('/api/checkout_sessions', {
-          method: 'POST',
-          headers: { origin: 'http://localhost:3000/' },
-      });
-      const checkoutSessionJson = await checkoutSession.json();
+    const checkoutSession = await fetch('/api/checkout_sessions', {
+      method: 'POST',
+      headers: { origin: 'http://localhost:3000/' },
+    });
+    const checkoutSessionJson = await checkoutSession.json();
 
-      const stripe = await getStripe();
-      const { error } = await stripe.redirectToCheckout({
-          sessionId: checkoutSessionJson.id,
-      });
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: checkoutSessionJson.id,
+    });
 
-      if (error) {
-          console.warn(error.message);
-      }
+    if (error) {
+      console.warn(error.message);
+    }
   } catch (error) {
-      console.error('Error creating checkout session:', error);
+    console.error('Error creating checkout session:', error);
   }
 };
 
-
 export default function Page() {
   return (
-    <div style={{ textAlign: 'center' }}>
-      <Link href="/Playground">
-        <Button variant="outlined" sx={{ color: 'white' }}>+ CREATE</Button>
+    <Paper
+      elevation={24} // Adds a deep shadow for elevation
+      sx={{
+        backgroundColor: '#2C2F5C',
+        borderRadius: '16px', // Rounded corners
+        padding: '2em',
+        marginTop: '2em',
+        textAlign: 'center',
+        color: 'white',
+        maxWidth: '600px',
+        margin: '2em auto', // Center the box horizontally
+        boxShadow: '0 0 15px rgba(255, 255, 255, 0.3)', // Reduced white shadow for borders
+      }}
+    >
+      <Typography variant="h5" gutterBottom>
+        Master any topic in minutes with QGenie!
+      </Typography>
+      <Typography variant="body1" gutterBottom fontFamily={"Roboto"}>
+        Turn any text into exam-ready flashcards instantly. Prepare smarter, not harder—your study genie awaits!
+      </Typography>
+      <Link href="/Playground" passHref>
+        <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
+          + CREATE
+        </Button>
       </Link>
-      {/* <Button variant="contained" color="primary" sx={{ mt: 2, mr: 2,  backgroundColor: '#1B1A55',  }} onClick={handleSubmit}>
-        Pricing
-      </Button> */}
-    </div>
+    </Paper>
   );
 }
