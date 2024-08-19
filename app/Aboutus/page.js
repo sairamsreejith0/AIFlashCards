@@ -4,10 +4,21 @@ import { Card, CardContent, Typography, Avatar, Grid, Container, Box } from '@mu
 // Function to fetch developer data from GitHub API
 async function fetchDevelopers() {
   const developers = [
-    { username: 'pravallikabollavaram', name: 'Pravallika Bollavaram' },
-    { username: 'sairamsreejith0', name: 'Venkata Sairam Nagilla' },
-    { username: 'harsha-1718', name: 'Harshavardhan Reddy Yarmareddy' },
-    // Add more GitHub usernames here
+    {
+      username: 'pravallikabollavaram',
+      name: 'Pravallika Bollavaram',
+      bio: 'Implemented OpenAI integration, user dashboard and UI changes', // Custom bio for Pravallika
+    },
+    {
+      username: 'sairamsreejith0',
+      name: 'Venkata Sairam Nagilla',
+      bio: 'Implemented user authentication using Clerk, flashcards data storage using Firebase and UI changes', // Custom bio for Sairam
+    },
+    {
+      username: 'harsha-1718',
+      name: 'Harshavardhan Reddy Yarmareddy',
+      bio: 'Implemented payment integration using Stripe and UI changes', // Custom bio for Harsha
+    },
   ];
 
   const promises = developers.map(async (dev) => {
@@ -16,7 +27,6 @@ async function fetchDevelopers() {
     return {
       ...dev,
       image: data.avatar_url, // Get the profile picture URL
-      bio: data.bio || 'Full Stack Developer', // Get the bio or use a default value
     };
   });
 
@@ -29,10 +39,10 @@ export default async function AboutUs() {
 
   return (
     <Container sx={{ py: 5 }}>
-      <Typography variant="h2" align="center" gutterBottom color={'white'} fontFamily={'Roboto'}>
+      <Typography variant="h4" align="center" gutterBottom color={'white'} fontFamily={'Roboto'}>
         Meet the Developers
       </Typography>
-      <Grid container spacing={4} fontFamily={'Roboto'}>
+      <Grid container spacing={4} fontFamily={'Roboto'} color={'white'}>
         {developers.map((developer) => (
           <Grid item key={developer.username} xs={12} sm={6} md={4}>
             <Box
