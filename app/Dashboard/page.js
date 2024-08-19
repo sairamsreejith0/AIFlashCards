@@ -2,16 +2,21 @@
 
 import { Paper, Box, Typography, Grid, Button } from '@mui/material';
 import Link from 'next/link';
+import getStripe from '../utils/page';
 import { useState } from 'react';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
+import Writer from '../components/typewriter';
+
 
 export const handleSubmit = async () => {
   try {
+    console.log("in handlesubmit");
     const checkoutSession = await fetch('/api/checkout_sessions', {
       method: 'POST',
       headers: { origin: 'http://localhost:3000/' },
     });
     const checkoutSessionJson = await checkoutSession.json();
-
+    console.log(checkoutSession);
     const stripe = await getStripe();
     const { error } = await stripe.redirectToCheckout({
       sessionId: checkoutSessionJson.id,
@@ -64,17 +69,26 @@ export default function Page() {
         }}
       >
         <Typography variant="h5" gutterBottom>
-          Master any topic in minutes with QGenie!
+          <Writer msg="Master any topic in minutes with QGenie!"/>
         </Typography>
         <Typography variant="body1" gutterBottom fontFamily={"Roboto"}>
           Turn any text into exam-ready flashcards instantly. Prepare smarter, not harder—your study genie awaits!
         </Typography>
-        <Link href="/Playground" passHref>
+        <SignedIn>
+      <Link href="/Playground" passHref>
           <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
             + CREATE
           </Button>
         </Link>
-      </Paper>
+        </SignedIn>
+      <SignedOut>
+      <Link href="/sign-in" passHref>
+        <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
+          + CREATE
+        </Button>
+      </Link>
+      </SignedOut>
+    </Paper>
 
       {/* Features Section with Stacked Cards */}
       <Box sx={{ marginTop: '4em', textAlign: 'center', color: '#ffffff', position: 'relative', zIndex: 5 }}>

@@ -1,45 +1,72 @@
 // Playground/page.js
-"use client";
-import React, { useState } from "react";
-import axios from 'axios'; // AXIOS - a library for making http requests
+"use client"
+import React, { useEffect, useState } from "react";
+import axios from 'axios'; 
 import { TextField, Button, Box, Container, Grid, Typography } from "@mui/material";
 import Flashcard from "../components/flashcard";
 import "../../app/globals.css";
-import { saveFlashcards } from '../utils/api'; // Ensure correct path
+import { saveFlashcards } from '../utils/api';
 import { useAuth } from '@clerk/nextjs';
-import { signInWithCustomToken } from "firebase/auth"; // Firebase auth methods
-import { auth } from '../../config'; // Import your initialized Firebase services
+import { signInWithCustomToken } from "firebase/auth";
+import { auth, db } from '../../config';
 import Loading from "../components/loading";
 import { useRouter } from "next/navigation";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import CustomAlert from '../../app/components/customAlert'  // Import the custom alert
+
 export default function MessageInput() {
   const [message, setMessage] = useState("");
-  const [qaPairs, setQaPairs] = useState([]); // Stores an array of question-answer pairs
-  const [loading, setLoading] = useState(false); // Loading state
+  const [qaPairs, setQaPairs] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [title, setTitle] = useState("");
+  const [usageCount, setUsageCount] = useState(0);
+  const [openAlert, setOpenAlert] = useState(false); // State to control the alert dialog
   const router = useRouter();
+  const { userId, getToken } = useAuth();
 
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  useEffect(() => {
+    if (userId) {
+      fetchCounter();
+    }
+  }, [userId]);
 
-  // const temparray = [{
-  //   question:"xyz",
-  //   answer:"xyz",
-  // }];
+  const fetchCounter = async () => {
+    const userDocRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      setUsageCount(userData.generateCount || 0);
+    } else {
+      await setDoc(userDocRef, { generateCount: 0 });
+      setUsageCount(0);
+    }
+  };
+
   const handleSend = async () => {
-    if (!message.trim()) return; // Prevents sending if the input is empty or only spaces.
+    if (!message.trim()) return;
 
-    setLoading(true); // Start loading
+    setLoading(true);
+    if (usageCount >= 2) {
+      setOpenAlert(true); // Open the alert dialog
+      setLoading(false);
+      return;
+    }
 
     try {
       setTitle(message);
-      const response = await axios.post('/api/chat', { message: message });
-      setQaPairs(response.data.qaPairs); // Update state with the array of Q&A pairs
+      const response = await axios.post('/api/chat', { message });
+      setQaPairs(response.data.qaPairs);
 
+      const userDocRef = doc(db, "users", userId);
+      await setDoc(userDocRef, { generateCount: usageCount + 1 }, { merge: true });
+      setUsageCount(usageCount + 1);
     } catch (error) {
       console.error('Error generating questions and answers:', error);
     } finally {
-      setLoading(false); // Stop loading
-      setMessage(''); // Clears the input field after the request is completed.
+      setLoading(false);
+      setMessage('');
     }
   };
 
@@ -50,23 +77,15 @@ export default function MessageInput() {
       }
       setSaving(true);
 
-      // Fetch Firebase token using Clerk
       const firebaseToken = await getToken({ template: 'integration_firebase' });
-      console.log("Firebase Token Retrieved:", firebaseToken);
-
-      // Sign in with Firebase using the token
       await signInWithCustomToken(auth, firebaseToken);
-      console.log("Signed in with Firebase");
 
-      // Now proceed to save the flashcards
       await saveFlashcards(userId, qaPairs, title);
-      console.log('Flashcards saved successfully');
+      router.push('/Dashboard/myCollection');
     } catch (error) {
       console.error('Error saving flashcards:', error);
-    }finally{
-      router.push('/Dashboard/myCollection');
+    } finally {
       setSaving(false);
-      
     }
   };
 
@@ -116,16 +135,14 @@ export default function MessageInput() {
           variant="contained"
           color="success"
           onClick={handleSend}
-          sx={{ height: "fit-content", marginTop: 2, backgroundColor: '#535C91', '&:hover': {
-      backgroundColor: '#2E236C'} }} // Add margin-top for spacing
+          sx={{ height: "fit-content", marginTop: 2, backgroundColor: '#535C91', '&:hover': { backgroundColor: '#2E236C' } }}
         >
           Generate
         </Button>
       </Box>
-      {loading && (<Loading msg="Generating questions..."/>
-      )}
-       {saving && (<Loading msg="Saving flashcards..." />)}
 
+      {loading && <Loading msg="Generating questions..." />}
+      {saving && <Loading msg="Saving flashcards..." />}
 
       {!loading && !saving && (
         <Container>
@@ -143,25 +160,31 @@ export default function MessageInput() {
             ))}
           </Grid>
           {qaPairs.length > 0 && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: 2,
-            }}
-          >
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ height: "fit-content" }}
-              onClick={handleSave}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 2,
+              }}
             >
-              Save
-            </Button>
-          </Box>
-          )};
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ height: "fit-content" }}
+                onClick={handleSave}
+              >
+                Save
+              </Button>
+            </Box>
+          )}
         </Container>
-      )};
+      )}
+
+      {/* Custom Alert Box */}
+      <CustomAlert
+        open={openAlert}
+        onClose={() => setOpenAlert(false)} // Close the alert dialog
+      />
     </>
   );
 }

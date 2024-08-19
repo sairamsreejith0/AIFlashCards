@@ -48,7 +48,7 @@ export default function Header() {
         
           <UserButton 
           showName
-          signOutUrl="/"
+          signOutUrl="/sign-in"
           />
         </SignedIn>
       </Toolbar>
