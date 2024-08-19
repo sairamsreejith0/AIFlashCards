@@ -4,6 +4,8 @@ import { Paper, Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 import getStripe from '../utils/page';
 import { SignedIn, SignedOut } from '@clerk/nextjs';
+import Writer from '../components/typewriter';
+
 
 export const handleSubmit = async () => {
   try {
@@ -44,7 +46,7 @@ export default function Page() {
       }}
     >
       <Typography variant="h5" gutterBottom>
-        Master any topic in minutes with QGenie!
+        <Writer msg="Master any topic in minutes with QGenie!"/>
       </Typography>
       <Typography variant="body1" gutterBottom fontFamily={"Roboto"}>
         Turn any text into exam-ready flashcards instantly. Prepare smarter, not harder—your study genie awaits!
