@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { SignedIn, SignedOut } from '@clerk/nextjs';
 import Writer from '../components/typewriter';
 
-
 export const handleSubmit = async () => {
   try {
     console.log("in handlesubmit");
@@ -69,26 +68,26 @@ export default function Page() {
         }}
       >
         <Typography variant="h5" gutterBottom>
-          <Writer msg="Master any topic in minutes with QGenie!"/>
+          <Writer msg="Master any topic in minutes with QGenie!" />
         </Typography>
         <Typography variant="body1" gutterBottom fontFamily={"Roboto"}>
           Turn any text into exam-ready flashcards instantly. Prepare smarter, not harder—your study genie awaits!
         </Typography>
         <SignedIn>
-      <Link href="/Playground" passHref>
-          <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
-            + CREATE
-          </Button>
-        </Link>
+          <Link href="/Playground" passHref>
+            <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
+              + CREATE
+            </Button>
+          </Link>
         </SignedIn>
-      <SignedOut>
-      <Link href="/sign-in" passHref>
-        <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
-          + CREATE
-        </Button>
-      </Link>
-      </SignedOut>
-    </Paper>
+        <SignedOut>
+          <Link href="/sign-in" passHref>
+            <Button variant="outlined" className='gradient-button' sx={{ color: 'white', marginTop: '1em' }}>
+              + CREATE
+            </Button>
+          </Link>
+        </SignedOut>
+      </Paper>
 
       {/* Features Section with Stacked Cards */}
       <Box sx={{ marginTop: '4em', textAlign: 'center', color: '#ffffff', position: 'relative', zIndex: 5 }}>
@@ -213,7 +212,7 @@ export default function Page() {
               2
             </Box>
             <Typography variant="body1" sx={{ marginTop: '1em' }}>
-              Click "Generate"
+              Click &quot;Generate&quot;
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
