@@ -1,8 +1,10 @@
-# **AI Flash Cards**
-
+# **QGenie**
+QGenie—your ultimate study companion! Instantly transform any text, keyword, or webpage into smart flashcards that make mastering any topic a breeze. With QGenie, studying is quicker, smarter, and tailored just for you!
 
 ## **Features**  
-
+- Custom Flashcards from Any Source.
+- Choose Your Output.
+- Save and Manage Flashcards
 
 ## **Installation:**  
 ### **Steps**  
@@ -33,6 +35,8 @@
   - CLERK_SECRET_KEY=your_clerk_secret_key
   - NEXT_PUBLIC_CLERK_SIGN_IN_URL=url_path_for_signin_page
   - NEXT_PUBLIC_CLERK_SIGN_UP_URL=url_path_for_signup_page
+  - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_publishable_key_here
+  - STRIPE_SECRET_KEY=your_secret_key_here
 
 - Run locally : npm run dev
 
