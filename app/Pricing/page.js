@@ -14,7 +14,7 @@ export default function PricingPage() {
     };
 
     // Pricing details based on billing cycle
-    const premiumPrice = billingCycle === 'yearly' ? '$5' : '$49.99';
+    const premiumPrice = billingCycle === 'yearly' ? '$10' : '$49.99';
     const premiumSubText = billingCycle === 'yearly' ? 'per month (billed yearly)' : 'per month';
 
     return (
