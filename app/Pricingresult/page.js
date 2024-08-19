@@ -20,6 +20,7 @@ import { Box,Container,CircularProgress,Typography } from "@mui/material"
         try {
           const res = await fetch(`/api/checkout_sessions?session_id=${session_id}`)
           const sessionData = await res.json()
+          console.log(sessionData);
           if (res.ok) {
             setSession(sessionData)
           } else {
@@ -57,7 +58,7 @@ import { Box,Container,CircularProgress,Typography } from "@mui/material"
     }
 
     return (
-      <Container maxWidth="sm" sx={{textAlign: 'center', mt: 4}}>
+      <Container maxWidth="sm" sx={{textAlign: 'center', mt: 4,color:"white"}}>
         {session.payment_status === 'paid' ? (
           <>
             <Typography variant="h4">Thank you for your purchase!</Typography>
