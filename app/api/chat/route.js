@@ -19,7 +19,7 @@ export async function POST(req) {
         console.log("Message received:", message); // Log the received message
 
         // Generate a prompt to ask GPT-4 to create 10 Q&A pairs
-        const prompt = `Generate 10 questions and answers about the following topic: ${message}`;
+        const prompt = `Generate 5 questions and answers about the following topic: ${message}`;
 
 
         // Send the user's message to the OpenAI API, specifying the GPT-4 model
