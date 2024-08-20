@@ -22,6 +22,7 @@ export async function POST(req) {
         const prompt = `Generate 10 questions and answers about the following topic: ${message}`;
 
 
+
         // Send the user's message to the OpenAI API, specifying the GPT-4 model
         const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
