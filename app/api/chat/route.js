@@ -11,24 +11,24 @@ const openai = new OpenAI({
 export const runtime = 'edge';
 
 export async function POST(req) {
-    console.log("Request received at /api/chat"); // Log when a request is received
+    // console.log("Request received at /api/chat"); // Log when a request is received
     
     try {
         // Parse the incoming JSON request body to extract the 'message' field
         const { message } = await req.json();
-        console.log("Message received:", message); // Log the received message
+        // console.log("Message received:", message); // Log the received message
 
         // Generate a prompt to ask GPT-4 to create 10 Q&A pairs
-        const prompt = `Generate 5 questions and answers about the following topic: ${message}`;
+        const prompt = `Generate 10 questions and answers about the following topic: ${message}`;
 
 
         // Send the user's message to the OpenAI API, specifying the GPT-4 model
         const response = await openai.chat.completions.create({
-            model: 'gpt-4',
+            model: 'gpt-3.5-turbo',
             messages: [{ role: 'user', content: prompt }], // The message is formatted for the API
         });
 
-        console.log('OpenAI API Response:', response); // Log the full API response for debugging
+        // console.log('OpenAI API Response:', response); // Log the full API response for debugging
         // Process the response to extract questions and answers
         const qaText = response.choices[0].message.content;
 
@@ -48,7 +48,7 @@ export async function POST(req) {
         return NextResponse.json({ qaPairs });
       
     } catch (error) {
-        console.error('Error in POST handler:', error);
+        // console.error('Error in POST handler:', error);
         if (error instanceof OpenAI.APIError) {
             const { name, status, headers, message } = error;
             return NextResponse.json({ name, status, headers, message }, { status });

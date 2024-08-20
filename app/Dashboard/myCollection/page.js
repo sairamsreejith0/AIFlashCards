@@ -25,7 +25,7 @@ const FlashcardCollection = () => {
       }
 
       try {
-        console.log(`Fetching flashcards for user: ${userId}`);
+        // console.log(`Fetching flashcards for user: ${userId}`);
 
         const flashcardsCollection = collection(
           db,
@@ -42,7 +42,7 @@ const FlashcardCollection = () => {
 
         setFlashcards(flashcardsList);
         setLoading(false);
-        console.log("Flashcards fetched:", flashcardsList);
+        // console.log("Flashcards fetched:", flashcardsList);
       } catch (error) {
         console.error("Error fetching flashcards: ", error);
         setLoading(false);
@@ -81,7 +81,7 @@ const FlashcardCollection = () => {
       // Reset the selected collection
       setSelectedCollection(null);
 
-      console.log("Flashcard collection deleted successfully");
+      // console.log("Flashcard collection deleted successfully");
     } catch (error) {
       console.error("Error deleting flashcard collection: ", error);
     }
@@ -122,7 +122,7 @@ const FlashcardCollection = () => {
       {selectedCollection ? (
         <div>
           <Box sx={{ display: "flex", marginLeft: 2, gap: 2 }}>
-            <Button onClick={handleBackClick}  className="gradient-button">
+            <Button onClick={handleBackClick}  className="gradient-button" sx={{color:'white'}}>
               Back to Collections
             </Button>
             <Button
@@ -158,7 +158,7 @@ const FlashcardCollection = () => {
               </Grid>
             ))
           ) : (
-            <Typography variant="h6" align="center">
+            <Typography color='white' variant="h6" align="center">
               No flashcards found.
             </Typography>
           )}
