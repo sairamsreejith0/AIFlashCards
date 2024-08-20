@@ -24,7 +24,7 @@ export async function POST(req) {
 
         // Send the user's message to the OpenAI API, specifying the GPT-4 model
         const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4',
             messages: [{ role: 'user', content: prompt }], // The message is formatted for the API
         });
 
