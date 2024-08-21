@@ -9,13 +9,13 @@ import Writer from '../components/typewriter';
 
 export const handleSubmit = async () => {
   try {
-    console.log("in handlesubmit");
+    // console.log("in handlesubmit");
     const checkoutSession = await fetch('/api/checkout_sessions', {
       method: 'POST',
       headers: { origin: 'http://localhost:3000/' },
     });
     const checkoutSessionJson = await checkoutSession.json();
-    console.log(checkoutSession);
+    // console.log(checkoutSession);
     const stripe = await getStripe();
     const { error } = await stripe.redirectToCheckout({
       sessionId: checkoutSessionJson.id,
