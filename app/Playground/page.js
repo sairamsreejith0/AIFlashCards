@@ -146,8 +146,7 @@ export default function MessageInput() {
 
       {!loading && !saving && (
         <Container>
-          <Typography variant="h4" component="h1" sx={{ marginTop: 4 }} gutterBottom>
-            Flashcards
+          <Typography color='white' variant="h4" component="h1" sx={{ marginTop: 4 }} gutterBottom>
           </Typography>
           <Grid container spacing={2}>
             {qaPairs.map((flashcard, index) => (

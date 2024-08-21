@@ -8,13 +8,13 @@ export async function POST(req) {
     if (!userId) {
       return new Response('User not authenticated', { status: 401 });
     }
-console.log("in route");
+// console.log("in route");
     // Create a document reference for the user in the 'users' collection
     const userDocRef = doc(db, 'users', userId);
 
     // Create a collection reference for the flashcards within the user's document
     const flashcardCollectionRef = collection(userDocRef, 'flashcardCollections');
-    console.log("in route2");
+    // console.log("in route2");
     // Add a new document to the 'flashcardCollections' subcollection
     const newFlashcardDocRef = doc(flashcardCollectionRef);
     await setDoc(newFlashcardDocRef, {
