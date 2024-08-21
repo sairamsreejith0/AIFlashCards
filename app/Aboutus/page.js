@@ -84,7 +84,7 @@ export default async function AboutUs() {
                     src={developer.image}
                     sx={{ width: 120, height: 120, marginBottom: 2 }} // Increased avatar size
                   />
-                  <Typography variant="h6" align="center">
+                  <Typography variant="h6" align="center" sx={{ color: 'white' }}>
                     {developer.name}
                   </Typography>
                 </Card>
