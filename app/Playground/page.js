@@ -168,6 +168,7 @@ export default function MessageInput() {
               }}
             >
               <Button
+                className="gradient-button"
                 variant="contained"
                 color="success"
                 sx={{ height: "fit-content" }}
